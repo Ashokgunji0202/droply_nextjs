@@ -1,22 +1,54 @@
 import SignInForm from "@/components/SignInForm";
-import { CloudUpload } from "lucide-react";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 export default function SignInPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        backgroundImage:
+          "linear-gradient(to bottom, #f9fafb, #f3f4f6)",
+        backgroundColor: "#f9fafb",
+      }}
+    >
       {/* Use the unified Navbar component */}
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
 
-      <main className="flex-1 flex justify-center items-center p-6">
+      <main
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "1.5rem",
+        }}
+      >
         <SignInForm />
       </main>
 
       {/* Dark mode footer */}
-      <footer className="bg-gray-900 text-white py-4">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-sm text-gray-400">
+      <footer
+        style={{
+          backgroundColor: "#111827",
+          color: "#ffffff",
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            paddingLeft: "1.5rem",
+            paddingRight: "1.5rem",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ fontSize: "0.875rem", color: "#9ca3af" }}>
             &copy; {new Date().getFullYear()} Droply. All rights reserved.
           </p>
         </div>

@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Tabs, Tab } from "@heroui/tabs";
 import { FileUp, FileText, User } from "lucide-react";
 import FileUploadForm from "@/components/FileUploadForm";
 import FileList from "@/components/FileList";
@@ -25,7 +23,6 @@ export default function DashboardContent({
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [currentFolder, setCurrentFolder] = useState<string | null>(null);
 
-  // Set the active tab based on URL parameter
   useEffect(() => {
     if (tabParam === "profile") {
       setActiveTab("profile");
@@ -43,92 +40,84 @@ export default function DashboardContent({
   }, []);
 
   return (
-    <>
-      <div className="mb-8">
-        <h2 className="text-4xl font-bold text-default-900">
+    <div>
+      <div style={{ marginBottom: "2rem" }}>
+        <h2 style={{ fontSize: "2rem", fontWeight: "bold" }}>
           Hi,{" "}
-          <span className="text-primary">
+          <span style={{ color: "#0070f3" }}>
             {userName?.length > 10
               ? `${userName?.substring(0, 10)}...`
               : userName?.split(" ")[0] || "there"}
           </span>
           !
         </h2>
-        <p className="text-default-600 mt-2 text-lg">
+        <p style={{ marginTop: "0.5rem", color: "#666" }}>
           Your images are waiting for you.
         </p>
       </div>
 
-      <Tabs
-        aria-label="Dashboard Tabs"
-        color="primary"
-        variant="underlined"
-        selectedKey={activeTab}
-        onSelectionChange={(key) => setActiveTab(key as string)}
-        classNames={{
-          tabList: "gap-6",
-          tab: "py-3",
-          cursor: "bg-primary",
-        }}
-      >
-        <Tab
-          key="files"
-          title={
-            <div className="flex items-center gap-3">
-              <FileText className="h-5 w-5" />
-              <span className="font-medium">My Files</span>
-            </div>
-          }
+      {/* Tab Switcher */}
+      <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
+        <button
+          onClick={() => setActiveTab("files")}
+          style={{
+            padding: "0.5rem 1rem",
+            borderBottom: activeTab === "files" ? "2px solid #0070f3" : "none",
+            fontWeight: activeTab === "files" ? "bold" : "normal",
+            cursor: "pointer",
+          }}
         >
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
-              <Card className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
-                <CardHeader className="flex gap-3">
-                  <FileUp className="h-5 w-5 text-primary" />
-                  <h2 className="text-xl font-semibold">Upload</h2>
-                </CardHeader>
-                <CardBody>
-                  <FileUploadForm
-                    userId={userId}
-                    onUploadSuccess={handleFileUploadSuccess}
-                    currentFolder={currentFolder}
-                  />
-                </CardBody>
-              </Card>
-            </div>
-
-            <div className="lg:col-span-2">
-              <Card className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
-                <CardHeader className="flex gap-3">
-                  <FileText className="h-5 w-5 text-primary" />
-                  <h2 className="text-xl font-semibold">Your Files</h2>
-                </CardHeader>
-                <CardBody>
-                  <FileList
-                    userId={userId}
-                    refreshTrigger={refreshTrigger}
-                    onFolderChange={handleFolderChange}
-                  />
-                </CardBody>
-              </Card>
-            </div>
-          </div>
-        </Tab>
-
-        <Tab
-          key="profile"
-          title={
-            <div className="flex items-center gap-3">
-              <User className="h-5 w-5" />
-              <span className="font-medium">Profile</span>
-            </div>
-          }
+          <FileText style={{ verticalAlign: "middle", marginRight: "0.5rem" }} />
+          My Files
+        </button>
+        <button
+          onClick={() => setActiveTab("profile")}
+          style={{
+            padding: "0.5rem 1rem",
+            borderBottom: activeTab === "profile" ? "2px solid #0070f3" : "none",
+            fontWeight: activeTab === "profile" ? "bold" : "normal",
+            cursor: "pointer",
+          }}
         >
-          <div className="mt-8">
-            <UserProfile />
+          <User style={{ verticalAlign: "middle", marginRight: "0.5rem" }} />
+          Profile
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === "files" && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem" }}>
+          <div style={{ flex: "1 1 30%", minWidth: "280px", border: "1px solid #ccc", padding: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+              <FileUp style={{ marginRight: "0.5rem", color: "#0070f3" }} />
+              <h3 style={{ margin: 0 }}>Upload</h3>
+            </div>
+            <FileUploadForm
+              userId={userId}
+              onUploadSuccess={handleFileUploadSuccess}
+              currentFolder={currentFolder}
+            />
           </div>
-        </Tab>
-      </Tabs>
-    </>
+
+          <div style={{ flex: "1 1 65%", minWidth: "280px", border: "1px solid #ccc", padding: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+              <FileText style={{ marginRight: "0.5rem", color: "#0070f3" }} />
+              <h3 style={{ margin: 0 }}>Your Files</h3>
+            </div>
+            <FileList
+              userId={userId}
+              refreshTrigger={refreshTrigger}
+              onFolderChange={handleFolderChange}
+            />
+          </div>
+        </div>
+      )}
+
+      {activeTab === "profile" && (
+        <div style={{ border: "1px solid #ccc", padding: "1rem", marginTop: "1rem" }}>
+          <UserProfile />
+        </div>
+      )}
+    </div>
   );
 }

@@ -1,7 +1,4 @@
-"use client";
-
 import { Star, Trash, X, ArrowUpFromLine, Download } from "lucide-react";
-import { Button } from "@heroui/button";
 import type { File as FileType } from "@/lib/db/schema";
 
 interface FileActionsProps {
@@ -23,72 +20,54 @@ export default function FileActions({
     <div className="flex flex-wrap gap-2 justify-end">
       {/* Download button */}
       {!file.isTrash && !file.isFolder && (
-        <Button
-          variant="flat"
-          size="sm"
+        <button
           onClick={() => onDownload(file)}
-          className="min-w-0 px-2"
-          startContent={<Download className="h-4 w-4" />}
+          className="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 min-w-0"
         >
+          <Download className="h-4 w-4 mr-2" />
           <span className="hidden sm:inline">Download</span>
-        </Button>
+        </button>
       )}
 
       {/* Star button */}
       {!file.isTrash && (
-        <Button
-          variant="flat"
-          size="sm"
+        <button
           onClick={() => onStar(file.id)}
-          className="min-w-0 px-2"
-          startContent={
-            <Star
-              className={`h-4 w-4 ${
-                file.isStarred
-                  ? "text-yellow-400 fill-current"
-                  : "text-gray-400"
-              }`}
-            />
-          }
+          className="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 min-w-0"
         >
-          <span className="hidden sm:inline">
-            {file.isStarred ? "Unstar" : "Star"}
-          </span>
-        </Button>
+          <Star
+            className={`h-4 w-4 mr-2 ${
+              file.isStarred ? "text-yellow-400 fill-current" : "text-gray-400"
+            }`}
+          />
+          <span className="hidden sm:inline">{file.isStarred ? "Unstar" : "Star"}</span>
+        </button>
       )}
 
       {/* Trash/Restore button */}
-      <Button
-        variant="flat"
-        size="sm"
+      <button
         onClick={() => onTrash(file.id)}
-        className="min-w-0 px-2"
-        color={file.isTrash ? "success" : "default"}
-        startContent={
-          file.isTrash ? (
-            <ArrowUpFromLine className="h-4 w-4" />
-          ) : (
-            <Trash className="h-4 w-4" />
-          )
-        }
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+          file.isTrash ? "bg-green-100 hover:bg-green-200 text-green-700" : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+        } min-w-0`}
       >
-        <span className="hidden sm:inline">
-          {file.isTrash ? "Restore" : "Delete"}
-        </span>
-      </Button>
+        {file.isTrash ? (
+          <ArrowUpFromLine className="h-4 w-4 mr-2" />
+        ) : (
+          <Trash className="h-4 w-4 mr-2" />
+        )}
+        <span className="hidden sm:inline">{file.isTrash ? "Restore" : "Delete"}</span>
+      </button>
 
       {/* Delete permanently button */}
       {file.isTrash && (
-        <Button
-          variant="flat"
-          size="sm"
-          color="danger"
+        <button
           onClick={() => onDelete(file)}
-          className="min-w-0 px-2"
-          startContent={<X className="h-4 w-4" />}
+          className="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-red-100 hover:bg-red-200 text-red-700 min-w-0"
         >
+          <X className="h-4 w-4 mr-2" />
           <span className="hidden sm:inline">Remove</span>
-        </Button>
+        </button>
       )}
     </div>
   );

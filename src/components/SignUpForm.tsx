@@ -7,18 +7,7 @@ import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { z } from "zod";
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
-import { Card, CardBody, CardHeader, CardFooter } from "@heroui/card";
-import { Divider } from "@heroui/divider";
-import {
-  Mail,
-  Lock,
-  AlertCircle,
-  CheckCircle,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Mail, Lock, AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { signUpSchema } from "@/schemas/signUpSchema";
 
 export default function SignUpForm() {
@@ -28,9 +17,7 @@ export default function SignUpForm() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
-  const [verificationError, setVerificationError] = useState<string | null>(
-    null
-  );
+  const [verificationError, setVerificationError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -64,8 +51,7 @@ export default function SignUpForm() {
     } catch (error: any) {
       console.error("Sign-up error:", error);
       setAuthError(
-        error.errors?.[0]?.message ||
-          "An error occurred during sign-up. Please try again."
+        error.errors?.[0]?.message || "An error occurred during sign-up. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -91,15 +77,12 @@ export default function SignUpForm() {
         router.push("/dashboard");
       } else {
         console.error("Verification incomplete:", result);
-        setVerificationError(
-          "Verification could not be completed. Please try again."
-        );
+        setVerificationError("Verification could not be completed. Please try again.");
       }
     } catch (error: any) {
       console.error("Verification error:", error);
       setVerificationError(
-        error.errors?.[0]?.message ||
-          "An error occurred during verification. Please try again."
+        error.errors?.[0]?.message || "An error occurred during verification. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -108,220 +91,162 @@ export default function SignUpForm() {
 
   if (verifying) {
     return (
-      <Card className="w-full max-w-md border border-default-200 bg-default-50 shadow-xl">
-        <CardHeader className="flex flex-col gap-1 items-center pb-2">
-          <h1 className="text-2xl font-bold text-default-900">
-            Verify Your Email
-          </h1>
-          <p className="text-default-500 text-center">
-            We've sent a verification code to your email
-          </p>
-        </CardHeader>
+      <div className="w-full max-w-md border border-gray-200 bg-gray-50 shadow-xl p-6 rounded-lg">
+        <div className="flex flex-col gap-1 items-center pb-2">
+          <h1 className="text-2xl font-bold text-gray-900">Verify Your Email</h1>
+          <p className="text-gray-500 text-center">We've sent a verification code to your email</p>
+        </div>
 
-        <Divider />
-
-        <CardBody className="py-6">
-          {verificationError && (
-            <div className="bg-danger-50 text-danger-700 p-4 rounded-lg mb-6 flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 flex-shrink-0" />
-              <p>{verificationError}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleVerificationSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label
-                htmlFor="verificationCode"
-                className="text-sm font-medium text-default-900"
-              >
-                Verification Code
-              </label>
-              <Input
-                id="verificationCode"
-                type="text"
-                placeholder="Enter the 6-digit code"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-                className="w-full"
-                autoFocus
-              />
-            </div>
-
-            <Button
-              type="submit"
-              color="primary"
-              className="w-full"
-              isLoading={isSubmitting}
-            >
-              {isSubmitting ? "Verifying..." : "Verify Email"}
-            </Button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-default-500">
-              Didn't receive a code?{" "}
-              <button
-                onClick={async () => {
-                  if (signUp) {
-                    await signUp.prepareEmailAddressVerification({
-                      strategy: "email_code",
-                    });
-                  }
-                }}
-                className="text-primary hover:underline font-medium"
-              >
-                Resend code
-              </button>
-            </p>
+        {verificationError && (
+          <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6 flex items-center gap-2">
+            <AlertCircle className="h-5 w-5 flex-shrink-0" />
+            <p>{verificationError}</p>
           </div>
-        </CardBody>
-      </Card>
+        )}
+
+        <form onSubmit={handleVerificationSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label htmlFor="verificationCode" className="text-sm font-medium text-gray-900">
+              Verification Code
+            </label>
+            <input
+              id="verificationCode"
+              type="text"
+              placeholder="Enter the 6-digit code"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md"
+              autoFocus
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded-md"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Verifying..." : "Verify Email"}
+          </button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-500">
+            Didn't receive a code?{" "}
+            <button
+              onClick={async () => {
+                if (signUp) {
+                  await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+                }
+              }}
+              className="text-blue-500 hover:underline font-medium"
+            >
+              Resend code
+            </button>
+          </p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="w-full max-w-md border border-default-200 bg-default-50 shadow-xl">
-      <CardHeader className="flex flex-col gap-1 items-center pb-2">
-        <h1 className="text-2xl font-bold text-default-900">
-          Create Your Account
-        </h1>
-        <p className="text-default-500 text-center">
-          Sign up to start managing your images securely
-        </p>
-      </CardHeader>
+    <div className="w-full max-w-md border border-gray-200 bg-gray-50 shadow-xl p-6 rounded-lg">
+      <div className="flex flex-col gap-1 items-center pb-2">
+        <h1 className="text-2xl font-bold text-gray-900">Create Your Account</h1>
+        <p className="text-gray-500 text-center">Sign up to start managing your images securely</p>
+      </div>
 
-      <Divider />
+      {authError && (
+        <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6 flex items-center gap-2">
+          <AlertCircle className="h-5 w-5 flex-shrink-0" />
+          <p>{authError}</p>
+        </div>
+      )}
 
-      <CardBody className="py-6">
-        {authError && (
-          <div className="bg-danger-50 text-danger-700 p-4 rounded-lg mb-6 flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 flex-shrink-0" />
-            <p>{authError}</p>
-          </div>
-        )}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="space-y-2">
+          <label htmlFor="email" className="text-sm font-medium text-gray-900">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="your.email@example.com"
+            {...register("email")}
+            className="w-full p-2 border border-gray-300 rounded-md"
+          />
+          {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+        </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="text-sm font-medium text-default-900"
-            >
-              Email
-            </label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="your.email@example.com"
-              startContent={<Mail className="h-4 w-4 text-default-500" />}
-              isInvalid={!!errors.email}
-              errorMessage={errors.email?.message}
-              {...register("email")}
-              className="w-full"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium text-default-900"
-            >
-              Password
-            </label>
-            <Input
+        <div className="space-y-2">
+          <label htmlFor="password" className="text-sm font-medium text-gray-900">
+            Password
+          </label>
+          <div className="relative">
+            <input
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
-              startContent={<Lock className="h-4 w-4 text-default-500" />}
-              endContent={
-                <Button
-                  isIconOnly
-                  variant="light"
-                  size="sm"
-                  onClick={() => setShowPassword(!showPassword)}
-                  type="button"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-default-500" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-default-500" />
-                  )}
-                </Button>
-              }
-              isInvalid={!!errors.password}
-              errorMessage={errors.password?.message}
               {...register("password")}
-              className="w-full"
+              className="w-full p-2 border border-gray-300 rounded-md"
             />
-          </div>
-
-          <div className="space-y-2">
-            <label
-              htmlFor="passwordConfirmation"
-              className="text-sm font-medium text-default-900"
+            <button
+              type="button"
+              className="absolute right-2 top-2"
+              onClick={() => setShowPassword(!showPassword)}
             >
-              Confirm Password
-            </label>
-            <Input
-              id="passwordConfirmation"
+              {showPassword ? <EyeOff className="h-5 w-5 text-gray-500" /> : <Eye className="h-5 w-5 text-gray-500" />}
+            </button>
+          </div>
+          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="passwordConfirm" className="text-sm font-medium text-gray-900">
+            Confirm Password
+          </label>
+          <div className="relative">
+            <input
+              id="passwordConfirm"
               type={showConfirmPassword ? "text" : "password"}
               placeholder="••••••••"
-              startContent={<Lock className="h-4 w-4 text-default-500" />}
-              endContent={
-                <Button
-                  isIconOnly
-                  variant="light"
-                  size="sm"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  type="button"
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4 text-default-500" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-default-500" />
-                  )}
-                </Button>
-              }
-              isInvalid={!!errors.passwordConfirm}
-              errorMessage={errors.passwordConfirm?.message}
               {...register("passwordConfirm")}
-              className="w-full"
+              className="w-full p-2 border border-gray-300 rounded-md"
             />
+            <button
+              type="button"
+              className="absolute right-2 top-2"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <EyeOff className="h-5 w-5 text-gray-500" /> : <Eye className="h-5 w-5 text-gray-500" />}
+            </button>
           </div>
+          {errors.passwordConfirm && <p className="text-sm text-red-500">{errors.passwordConfirm.message}</p>}
+        </div>
 
-          <div className="space-y-4">
-            <div className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-primary mt-0.5" />
-              <p className="text-sm text-default-600">
-                By signing up, you agree to our Terms of Service and Privacy
-                Policy
-              </p>
-            </div>
-          </div>
+        <div className="flex items-start gap-2">
+          <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5" />
+          <p className="text-sm text-gray-600">
+            By signing up, you agree to our Terms of Service and Privacy Policy
+          </p>
+        </div>
 
-          <Button
-            type="submit"
-            color="primary"
-            className="w-full"
-            isLoading={isSubmitting}
-          >
-            {isSubmitting ? "Creating account..." : "Create Account"}
-          </Button>
-        </form>
-      </CardBody>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded-md"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Creating account..." : "Create Account"}
+        </button>
+      </form>
 
-      <Divider />
-
-      <CardFooter className="flex justify-center py-4">
-        <p className="text-sm text-default-600">
+      <div className="flex justify-center py-4">
+        <p className="text-sm text-gray-600">
           Already have an account?{" "}
-          <Link
-            href="/sign-in"
-            className="text-primary hover:underline font-medium"
-          >
+          <Link href="/sign-in" className="text-blue-500 hover:underline font-medium">
             Sign in
           </Link>
         </p>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }

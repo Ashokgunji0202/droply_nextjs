@@ -1,0 +1,101 @@
+.dashboard-container {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.greeting-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.highlight {
+  color: #0070f3;
+}
+
+.greeting-subtitle {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 1.125rem;
+}
+
+.tabs {
+  margin-top: 2rem;
+}
+
+.tab-headers {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab-button {
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+}
+
+.tab-button.active {
+  border-color: #0070f3;
+  color: #0070f3;
+}
+
+.tab-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.files-tab .upload-card {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+.files-tab .files-card {
+  flex: 2;
+  min-width: 280px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.primary {
+  color: #0070f3;
+}

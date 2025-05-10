@@ -1,15 +1,7 @@
-import { Button } from "@heroui/button";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
-import { Card, CardBody } from "@heroui/card";
-import {
-  CloudUpload,
-  Shield,
-  Folder,
-  Image as ImageIcon,
-  ArrowRight,
-} from "lucide-react";
-import Navbar from "../components/Navbar";
+import { CloudUpload, Shield, Folder, Image as ImageIcon, ArrowRight } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
@@ -26,8 +18,7 @@ export default function Home() {
               <div className="space-y-6 text-center lg:text-left">
                 <div>
                   <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-default-900 leading-tight">
-                    Store your <span className="text-primary">images</span> with
-                    ease
+                    Store your <span className="text-primary">images</span> with ease
                   </h1>
                   <p className="text-lg md:text-xl text-default-600">
                     Simple. Secure. Fast.
@@ -37,26 +28,22 @@ export default function Home() {
                 <div className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
                   <SignedOut>
                     <Link href="/sign-up">
-                      <Button size="lg" variant="solid" color="primary">
+                      <button className="bg-primary text-white py-2 px-6 rounded-lg text-lg hover:bg-primary-dark transition">
                         Get Started
-                      </Button>
+                      </button>
                     </Link>
                     <Link href="/sign-in">
-                      <Button size="lg" variant="flat" color="primary">
+                      <button className="border border-primary text-primary py-2 px-6 rounded-lg text-lg hover:bg-primary/10 transition">
                         Sign In
-                      </Button>
+                      </button>
                     </Link>
                   </SignedOut>
                   <SignedIn>
                     <Link href="/dashboard">
-                      <Button
-                        size="lg"
-                        variant="solid"
-                        color="primary"
-                        endContent={<ArrowRight className="h-4 w-4" />}
-                      >
+                      <button className="bg-primary text-white py-2 px-6 rounded-lg text-lg flex items-center justify-center gap-2 hover:bg-primary-dark transition">
                         Go to Dashboard
-                      </Button>
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
                     </Link>
                   </SignedIn>
                 </div>
@@ -84,18 +71,18 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-              <Card className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
-                <CardBody className="p-6 text-center">
+              <div className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
+                <div className="p-6 text-center">
                   <CloudUpload className="h-10 md:h-12 w-10 md:w-12 mx-auto mb-4 text-primary" />
                   <h3 className="text-lg md:text-xl font-semibold mb-2 text-default-900">
                     Quick Uploads
                   </h3>
                   <p className="text-default-600">Drag, drop, done.</p>
-                </CardBody>
-              </Card>
+                </div>
+              </div>
 
-              <Card className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
-                <CardBody className="p-6 text-center">
+              <div className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
+                <div className="p-6 text-center">
                   <Folder className="h-10 md:h-12 w-10 md:w-12 mx-auto mb-4 text-primary" />
                   <h3 className="text-lg md:text-xl font-semibold mb-2 text-default-900">
                     Smart Organization
@@ -103,11 +90,11 @@ export default function Home() {
                   <p className="text-default-600">
                     Keep it tidy, find it fast.
                   </p>
-                </CardBody>
-              </Card>
+                </div>
+              </div>
 
-              <Card className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow sm:col-span-2 md:col-span-1 mx-auto sm:mx-0 max-w-md sm:max-w-full">
-                <CardBody className="p-6 text-center">
+              <div className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow sm:col-span-2 md:col-span-1 mx-auto sm:mx-0 max-w-md sm:max-w-full">
+                <div className="p-6 text-center">
                   <Shield className="h-10 md:h-12 w-10 md:w-12 mx-auto mb-4 text-primary" />
                   <h3 className="text-lg md:text-xl font-semibold mb-2 text-default-900">
                     Locked Down
@@ -115,8 +102,8 @@ export default function Home() {
                   <p className="text-default-600">
                     Your images, your eyes only.
                   </p>
-                </CardBody>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -130,27 +117,19 @@ export default function Home() {
             <SignedOut>
               <div className="flex flex-wrap justify-center gap-4 mt-8">
                 <Link href="/sign-up">
-                  <Button
-                    size="lg"
-                    variant="solid"
-                    color="primary"
-                    endContent={<ArrowRight className="h-4 w-4" />}
-                  >
+                  <button className="bg-primary text-white py-2 px-6 rounded-lg text-lg flex items-center justify-center gap-2 hover:bg-primary-dark transition">
                     Let's Go
-                  </Button>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
                 </Link>
               </div>
             </SignedOut>
             <SignedIn>
               <Link href="/dashboard">
-                <Button
-                  size="lg"
-                  variant="solid"
-                  color="primary"
-                  endContent={<ArrowRight className="h-4 w-4" />}
-                >
+                <button className="bg-primary text-white py-2 px-6 rounded-lg text-lg flex items-center justify-center gap-2 hover:bg-primary-dark transition">
                   Dashboard
-                </Button>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
               </Link>
             </SignedIn>
           </div>

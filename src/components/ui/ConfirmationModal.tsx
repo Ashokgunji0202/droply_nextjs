@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@heroui/modal";
-import { Button } from "@heroui/button";
 import { LucideIcon } from "lucide-react";
 
 interface ConfirmationModalProps {
@@ -30,39 +22,34 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   title,
   description,
   icon: Icon,
-  iconColor = "text-danger",
+  iconColor = "text-red-500",
   confirmText = "Confirm",
   cancelText = "Cancel",
-  confirmColor = "danger",
+  confirmColor = "bg-red-500 hover:bg-red-600",
   onConfirm,
   isDangerous = false,
   warningMessage,
 }) => {
+  if (!isOpen) return null;
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      backdrop="blur"
-      classNames={{
-        base: "border border-default-200 bg-default-50",
-        header: "border-b border-default-200",
-        footer: "border-t border-default-200",
-      }}
+    <div
+      className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+      onClick={() => onOpenChange(false)}
     >
-      <ModalContent>
-        <ModalHeader className="flex gap-2 items-center">
+      <div
+        className="bg-white rounded-lg shadow-lg w-96"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="border-b p-4 flex items-center gap-2">
           {Icon && <Icon className={`h-5 w-5 ${iconColor}`} />}
-          <span>{title}</span>
-        </ModalHeader>
-        <ModalBody>
+          <span className="text-lg font-semibold">{title}</span>
+        </div>
+        <div className="p-4">
           {isDangerous && warningMessage && (
-            <div className="bg-danger-50 text-danger-700 p-4 rounded-lg mb-4">
+            <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-4">
               <div className="flex items-start gap-3">
-                {Icon && (
-                  <Icon
-                    className={`h-5 w-5 mt-0.5 flex-shrink-0 ${iconColor}`}
-                  />
-                )}
+                {Icon && <Icon className={`h-5 w-5 ${iconColor}`} />}
                 <div>
                   <p className="font-medium">This action cannot be undone</p>
                   <p className="text-sm mt-1">{warningMessage}</p>
@@ -71,28 +58,26 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             </div>
           )}
           <p>{description}</p>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            variant="flat"
-            color="default"
+        </div>
+        <div className="flex justify-end p-4 gap-2">
+          <button
             onClick={() => onOpenChange(false)}
+            className="px-6 py-2 bg-gray-200 rounded-lg text-gray-700 hover:bg-gray-300"
           >
             {cancelText}
-          </Button>
-          <Button
-            color={confirmColor}
+          </button>
+          <button
             onClick={() => {
               onConfirm();
               onOpenChange(false);
             }}
-            startContent={Icon && <Icon className="h-4 w-4" />}
+            className={`px-6 py-2 rounded-lg text-white ${confirmColor}`}
           >
             {confirmText}
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
